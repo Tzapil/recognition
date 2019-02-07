@@ -16,27 +16,32 @@
                 return new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 })
             }
 
-            $('#myFileUpload').change(function (e) {
-                const imgFile = $('#myFileUpload')[0].files[0];
-                $('#console').text('GET PICTURE');
-                // create an HTMLImageElement from a Blob
-                faceapi.bufferToImage(imgFile).then((img) => {
-                    $('#myImg')[0].src = img.src;
-
-                    $('#console').text('DETECTION');
-                    faceapi.detectAllFaces($('#myImg')[0], getFaceDetectorOptions())
-                        .withFaceExpressions()
-                        .then((r) => {
-                            $('#console').text('GUUT');
-                            console.log(r);
-                        });
-
+            function init() {
+                $('#myFileUpload').change(function (e) {
+                    const imgFile = $('#myFileUpload')[0].files[0];
+                    $('#console').text('GET PICTURE');
+                    // create an HTMLImageElement from a Blob
+                    faceapi.bufferToImage(imgFile).then((img) => {
+                        $('#myImg')[0].src = img.src;
+    
+                        $('#console').text('DETECTION');
+                        faceapi.detectAllFaces($('#myImg')[0], getFaceDetectorOptions())
+                            .withFaceExpressions()
+                            .then((r) => {
+                                $('#console').text('GUUT');
+                                console.log(r);
+                            });
+    
+                    });
                 });
-            });
+            }
 
             $(document).ready(() => {
                 $('#console').text('START');
-                faceapi.loadSsdMobilenetv1Model('./weights');
+                faceapi.loadSsdMobilenetv1Model('./weights').then(() => {
+                    $('#console').text('MODEL LOADED');
+                    init();
+                });
             });
         </script>
     </body>
