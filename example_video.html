@@ -33,7 +33,7 @@
                     .withFaceExpressions()
                     .then(result => {
                         if (result) {
-                            drawDetections(videoEl, $('#overlay').get(0), [result]);
+                            drawExpressions(videoEl, $('#overlay').get(0), [result], 0.5, true);
                         }
                         setTimeout(() => onPlay(videoEl));
                     });
