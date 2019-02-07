@@ -14,7 +14,7 @@
         <img id="myImg" src="">
         <script>
             function getFaceDetectorOptions() {
-                return new faceapi.SsdMobilenetv1Options({ minConfidence })
+                return new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 })
             }
             var Model = null;
             function init() {
