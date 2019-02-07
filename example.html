@@ -26,6 +26,7 @@
     
                         $('#console').text('DETECTION');
                         faceapi.detectAllFaces($('#myImg')[0], getFaceDetectorOptions())
+                            .withFaceExpressions()
                             .then((r) => {
                                 $('#console').text('GUUT');
                                 console.log(r);
