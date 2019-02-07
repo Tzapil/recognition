@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <script src="./face-api.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/0.15.0/tf.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+        Модель: <input id="model-upload" name="model-upload" type="file" />
+        <div id="console"></div>
+
+        Картинка:
+        <input id="myFileUpload" type="file" accept=".jpg, .jpeg, .png">
+
+        <img id="myImg" src="">
+        <script>
+            var Model = null;
+            function init() {
+            $('#model-upload').change(function (e) {
+                $('#console').text('GO GO TENSOR FLOW');
+                tf.loadModel(
+                tf.io.browserFiles([$('#model-upload')[0].files[0]])).
+                then((model) => {
+                    Model = model;
+                    $('#console').text('GUUUT');
+                });
+            });
+            
+            $('#myFileUpload').change(function (e) {
+                const imgFile = $('#myFileUpload')[0].files[0]
+                // create an HTMLImageElement from a Blob
+                faceapi.bufferToImage(imgFile).then((img) => {
+                    $('#myImg')[0].src = img.src;
+
+                    faceapi.detectAllFaces($('#myImg')[0], options).withFaceExpressions()
+                });
+            });
+            }
+
+            $(document).ready(() => {
+            $('#console').text('START');
+                init();
+                faceapi.loadSsdMobilenetv1Model('./weight');
+            });
+        </script>
+    </body>
+</html>
