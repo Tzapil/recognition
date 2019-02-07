@@ -5,7 +5,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
     </head>
     <body>
-        Модель: <input id="model-upload" name="model-upload" type="file" />
         <div id="console"></div>
 
         Картинка:
@@ -16,32 +15,27 @@
             function getFaceDetectorOptions() {
                 return new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 })
             }
-            var Model = null;
-            function init() {
-            $('#model-upload').change(function (e) {
-                $('#console').text('GO GO TENSOR FLOW');
-                tf.loadModel(
-                tf.io.browserFiles([$('#model-upload')[0].files[0]])).
-                then((model) => {
-                    Model = model;
-                    $('#console').text('GUUUT');
-                });
-            });
-            
+
             $('#myFileUpload').change(function (e) {
-                const imgFile = $('#myFileUpload')[0].files[0]
+                const imgFile = $('#myFileUpload')[0].files[0];
+                $('#console').text('GET PICTURE');
                 // create an HTMLImageElement from a Blob
                 faceapi.bufferToImage(imgFile).then((img) => {
                     $('#myImg')[0].src = img.src;
 
-                    faceapi.detectAllFaces($('#myImg')[0], getFaceDetectorOptions()).withFaceExpressions()
+                    $('#console').text('DETECTION');
+                    faceapi.detectAllFaces($('#myImg')[0], getFaceDetectorOptions())
+                        .withFaceExpressions()
+                        .then((r) => {
+                            $('#console').text('GUUT');
+                            console.log(r);
+                        });
+
                 });
             });
-            }
 
             $(document).ready(() => {
                 $('#console').text('START');
-                init();
                 faceapi.loadSsdMobilenetv1Model('./weights');
             });
         </script>
