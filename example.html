@@ -9,7 +9,7 @@
     </head>
     <body>
         <img id="myImg" src="">
-        <!-- <canvas id="overlay" width="0" height="0" ></canvas> -->
+        <canvas id="overlay" width="0" height="0" ></canvas>
 
         <div id="console"></div>
         <div id="btn">
@@ -23,7 +23,6 @@
 
             function init() {
                 $('#btn').show();
-                const canvas = faceapi.createCanvasFromMedia($('#myImg').get(0));
                 $('#myFileUpload').change(function (e) {
                     const imgFile = $('#myFileUpload')[0].files[0];
                     $('#console').text('GET PICTURE');
@@ -37,7 +36,7 @@
                             .then((r) => {
                                 $('#console').text('GUUT');
                                 console.log(r);
-                                drawExpressions($('#myImg').get(0), canvas, r, 0.5, true)
+                                drawExpressions($('#myImg').get(0), $('#overlay').get(0), r, 0.5, true)
                             });
     
                     });
