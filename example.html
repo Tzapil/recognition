@@ -37,10 +37,12 @@
 
             $(document).ready(() => {
                 $('#console').text('START');
-                faceapi.loadSsdMobilenetv1Model('./weights').then(() => {
-                    $('#console').text('MODEL LOADED');
-                    init();
-                });
+                faceapi.loadSsdMobilenetv1Model('./weights')
+                    .then(() => faceapi.loadFaceExpressionModel('./weights'))
+                    .then(() => {
+                        $('#console').text('MODEL LOADED');
+                        init();
+                    });
             });
         </script>
     </body>
