@@ -13,6 +13,9 @@
 
         <img id="myImg" src="">
         <script>
+            function getFaceDetectorOptions() {
+                return new faceapi.SsdMobilenetv1Options({ minConfidence })
+            }
             var Model = null;
             function init() {
             $('#model-upload').change(function (e) {
@@ -31,13 +34,13 @@
                 faceapi.bufferToImage(imgFile).then((img) => {
                     $('#myImg')[0].src = img.src;
 
-                    faceapi.detectAllFaces($('#myImg')[0], options).withFaceExpressions()
+                    faceapi.detectAllFaces($('#myImg')[0], getFaceDetectorOptions()).withFaceExpressions()
                 });
             });
             }
 
             $(document).ready(() => {
-            $('#console').text('START');
+                $('#console').text('START');
                 init();
                 faceapi.loadSsdMobilenetv1Model('./weights');
             });
