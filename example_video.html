@@ -30,6 +30,7 @@
 
                 const options = getFaceDetectorOptions();
                 faceapi.detectSingleFace(videoEl, options)
+                    .withFaceExpressions()
                     .then(result => {
                         if (result) {
                             drawDetections(videoEl, $('#overlay').get(0), [result]);
@@ -55,6 +56,7 @@
             $(document).ready(() => {
                 $('#console').text('READY');
                 faceapi.loadTinyFaceDetectorModel('./weights')
+                    .then(() => faceapi.loadFaceExpressionModel('./weights'))
                     .then(() => {
                         $('#console').text('MODEL LOADED');
                         init();
