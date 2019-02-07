@@ -39,4 +39,4 @@ function resizeCanvasAndResults(dimensions, canvas, results) {
     }
   
     faceapi.drawFaceExpressions(canvas, resizedResults.map(({ detection, expressions }) => ({ position: detection.box, expressions })))
-  
+}
